@@ -3,7 +3,7 @@ import {API_KEY} from '../constants'
 
 
 export const getMUrl = (page=1,par) =>  {
-    return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&year=${par.year}&with_genres=${par.genre}&language=ru-RU&sort_by=${par.sort}&include_adult=false&include_video=true&page=${page}`;
+    return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&year=${par.year}&with_genres=${par.genre}&sort_by=${par.sort}&include_adult=false&page=${page}`;
 }
 
 
