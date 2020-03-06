@@ -1,6 +1,4 @@
-Текст задания:
-Реализовать на реакте интерфейс быстрого поиска. Состоит из двух частей.
-1. Верхняя панель: поисковая строка с инпутом. В процессе ввода букв запроса, появляются и конкретизируются саджесты под инпутом и результаты.
-2. Результаты: список из 10 результатов + пагинация. Параметры в урл добавлять не требуется.
+kinoreestr
 
-https://toster.ru/q/683232?utm_source=email_digest&utm_medium=email&utm_content=question&utm_campaign=weeklydigest211119
+api
+https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
