@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {formatDescription} from '../functions' 
 import {Spinner} from './Spinner' 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBookOpen } from '@fortawesome/free-solid-svg-icons'
 
 import noimage from '../img/noimage.png'
 
@@ -83,7 +85,9 @@ class DataGrid extends Component {
                                 <p>{formatDescription(film.overview)}</p>        
                             </div>
                             <div className="film-grid-more"> 
-                                <button type='button' className="link-button"  onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }><i className="material-icons">description</i></button>
+                                <button type='button' className="link-button"  onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }>
+                                    <FontAwesomeIcon icon={faBookOpen} />
+                                </button>
                             </div>
                         </div>
                     </div>:<></>

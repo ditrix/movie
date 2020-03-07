@@ -7,6 +7,10 @@ import SimilarList from './SimilarList'
 import CastList from './CastList'
 import {Spinner} from './Spinner'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+
+
 
 class Record extends Component {
   constructor(props){
@@ -114,9 +118,9 @@ class Record extends Component {
             <header> 
                   <div className="btn-back-wrap">
                    
-
                         <button type='button' className="btn-record-back link-button"  onClick={this.handleBackClicked}>
-                          <i className="material-icons">highlight_off</i>
+                        <FontAwesomeIcon  icon={faWindowClose} size="2x" />
+                  
                         </button>
                   </div>
             {

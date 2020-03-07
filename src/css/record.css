@@ -9,7 +9,7 @@
 .film-record footer {height: 5px;}
 
 
-.film-rec-info { border: 1px black solid; flex-direction: column;}
+.film-rec-info { flex-direction: column;}
 
 
 .film-record
@@ -80,7 +80,7 @@
 .film-record header {
   padding: 0px;
   margin-bottom: 5px;
-  background-color:  #650700;
+  background-color:  #007cb2;
 }
 
 .film-record header .film-rec-title {
