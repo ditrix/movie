@@ -10,12 +10,12 @@ class Filter extends Component {
             options: {
                 year: '',
                 genre: '',
-                sort: ''
+                sort: 'popularity.desc'
             }    
         }
         this.handleYearChange = this.handleYearChange.bind(this)
-        this.handleSortOptionChange = this.handleSortOptionChange.bind(this)
-        this.handleGenreOptionChange = this.handleGenreOptionChange.bind(this)
+ 
+    
         this.setFilter = this.setFilter.bind(this)
     } 
 
@@ -70,7 +70,7 @@ class Filter extends Component {
 
             <div className="input-form-item">
             
-            <select id='get-sort-by' onChange={this.handleSortOptionChange} className="filter-item">
+            <select id='get-sort-by' onChange={this.handleSortOptionChange.bind(this)} className="filter-item">
                     <option value=''>сортировка...</option>
                     <option value='popularity.desc'>популярность по убыванию</option>
                     <option value='popularity.asc'>популярность по возрастанию</option>
@@ -86,7 +86,7 @@ class Filter extends Component {
 
             <div className="input-form-item">
             
-            <select  id='get-genre' onChange={this.handleGenreOptionChange}> 
+            <select  id='get-genre' onChange={this.handleGenreOptionChange.bind(this)}> 
                 <option value="">все жанры</option>
                 { this.state.genres.map((genre, key) => 
                         <option key={key} value={genre.id} >{genre.name}</option>

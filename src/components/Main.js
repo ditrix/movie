@@ -27,7 +27,7 @@ class Main extends Component {
             filter: { 
               year: '', 
               genre: '', 
-              sort: ''
+              sort: 'popularity.desc'
             },
             chapter: 'фильмы',
         }
@@ -150,7 +150,11 @@ class Main extends Component {
             }  
           
           </main>    
-          <footer>dmvoloshin@gmail.com &copy; 2019 </footer>
+          <footer>
+            <a href="https://www.themoviedb.org/" target="_blank">DBMovie</a>&nbsp;  
+            
+            
+            dmvoloshin@gmail.com &copy; 2019 </footer>
           </div>
         )
     }

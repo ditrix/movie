@@ -1,24 +1,24 @@
-import {API_KEY} from '../constants'
+import {API_KEY,DEF_LANG} from '../constants'
 
 
 
 export const getMUrl = (page=1,par) =>  {
-    return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&year=${par.year}&with_genres=${par.genre}&sort_by=${par.sort}&include_adult=false&page=${page}`;
+    return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&year=${par.year}&with_genres=${par.genre}&sort_by=${par.sort}&language=${DEF_LANG}&include_adult=false&page=${page}`;
 }
 
 
 
 export const getTUrl = ( page = '1',par) => {
-    return `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&first_air_date.gte=${par.year}&with_genres=${par.genre}&language=ru-RU&sort_by=${par.sort}&include_adult=false&include_video=true&page=${page}`;
+    return `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&first_air_date.gte=${par.year}&with_genres=${par.genre}&language=${DEF_LANG}&sort_by=${par.sort}&include_adult=false&include_video=true&page=${page}`;
 }
 
 
 export const getMovieDetailUrl = record  => {  
-    return `https://api.themoviedb.org/3/movie/${record}?api_key=${API_KEY}&language=ru-RU`
+    return `https://api.themoviedb.org/3/movie/${record}?api_key=${API_KEY}&language=${DEF_LANG}`
 }
 
 export const getTvShowDetailUrl = record  => { 
-    return `https://api.themoviedb.org/3/tv/${record}?api_key=${API_KEY}&language=ru-RU`
+    return `https://api.themoviedb.org/3/tv/${record}?api_key=${API_KEY}&language=${DEF_LANG}`
 }
 
 export const getMovieReviewsUrl = id => { 
@@ -29,12 +29,12 @@ export const getTVShowReviewsUrl = id =>  {
     return `https://api.themoviedb.org/3/tv/${id}/reviews?api_key=${API_KEY}&page&page=1`
 }  
 
-export const formatDescription = str => {
-    return (str.length > 400) ?  str.substr(0,400) + '...' : str
+export const formatDescription = (str, max = 300) => {
+    return (str.length > max) ?  str.substr(0,max) + '...' : str
 }
 
 export const getGenresUrl = () => {
-    return `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=ru-RU`;
+    return `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=${DEF_LANG}`;
 }
 
 
@@ -88,7 +88,7 @@ export const getPagerData = (current = 1, total = 1) => {
 }
 
 export const getSearchUrl = (query, action, page=1 ) => {
-    return `https://api.themoviedb.org/3/search/${action}?api_key=${API_KEY}&language=ru-RU&page=${page}&include_adult=false&query='${query}'`
+    return `https://api.themoviedb.org/3/search/${action}?api_key=${API_KEY}&language=${DEF_LANG}&page=${page}&include_adult=false&query='${query}'`
 }
 
 
@@ -105,18 +105,18 @@ export const isCyrillic = str => {
 
 
 export const getCastUrl = (action, movie) => {
-  const url = `https://api.themoviedb.org/3/${action}/${movie}/credits?api_key=${API_KEY}&language=ru-RU`
+  const url = `https://api.themoviedb.org/3/${action}/${movie}/credits?api_key=${API_KEY}&language=${DEF_LANG}`
   return url
 }
 
 
 export const getSimilarMovie = movie => {
-    const url = `https://api.themoviedb.org/3/movie/${movie}/similar?api_key=${API_KEY}&language=ru-RU&page=1`
+    const url = `https://api.themoviedb.org/3/movie/${movie}/similar?api_key=${API_KEY}&language=${DEF_LANG}&page=1`
     return url
 }
 
 export const getSimilarTV = tv => {
-    const url = `https://api.themoviedb.org/3/tv/${tv}/similar?api_key=${API_KEY}&language=ru-RU&page=1`
+    const url = `https://api.themoviedb.org/3/tv/${tv}/similar?api_key=${API_KEY}&language=${DEF_LANG}&page=1`
     return url
 }
 

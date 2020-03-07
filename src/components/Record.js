@@ -5,6 +5,8 @@ import {getMovieDetailUrl, getTvShowDetailUrl,
 import  { MOVIE_REC,  TVSHOW_REC } from '../actions'
 import SimilarList from './SimilarList'
 import CastList from './CastList'
+import {Spinner} from './Spinner'
+
 
 class Record extends Component {
   constructor(props){
@@ -186,7 +188,7 @@ class Record extends Component {
                 <SimilarList action={this.props.action} similar={this.state.similar}  similarClicked={this.similarClicked}/>
                 </div>
             
-            :<span>similar loading...</span>
+            :<Spinner />
           }
        
       </React.Fragment>

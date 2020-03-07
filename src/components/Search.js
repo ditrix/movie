@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 class Search extends Component {
     constructor(props){
@@ -8,9 +9,7 @@ class Search extends Component {
         this.state = {
             query: '',
         }
-        this.handleSearch = this.handleSearch.bind(this)
-        this.setQuery = this.setQuery.bind(this)
-        this.handleClear = this.handleClear.bind(this)
+   
     }
 
     componentWillMount(){
@@ -33,10 +32,31 @@ class Search extends Component {
   
     render(){
         return(
-            <div className="search-form">
-                <input type="text" className="search-input" onChange={this.setQuery} onClick={this.handleClear} value={this.state.query} />
-                <i className="material-icons search-button" onClick={this.handleSearch}>search</i>
-            </div>
+            <form className='search-form'>
+            <table border="0" cellSpacing="0" cellPadding="0">
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" 
+                                onClick={this.handleClear.bind(this)} 
+                                value={this.state.city} 
+                                placeholder="Search..." 
+                                onChange={this.setQuery.bind(this)}  />
+                        </td>
+                        <td>
+                            <div className="search-button">
+                            <FontAwesomeIcon icon={faSearch} onClick={this.handleSearch.bind(this)} />
+                        </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>    
+      </form>
+            // <div className="search-form">
+            //     <input type="text" className="search-input" onChange={this.setQuery} onClick={this.handleClear} value={this.state.query} />
+            //     <i className="material-icons search-button" onClick={this.handleSearch}>search</i>
+            // </div>
         )
     }
 }

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {formatDescription} from '../functions' 
+import {Spinner} from './Spinner' 
+
+import noimage from '../img/noimage.png'
+
+// eslint-disable-next-line
 import axios from 'axios'
 
 
@@ -69,7 +74,10 @@ class DataGrid extends Component {
                             {film.title} 
                             </div>
                             <div className="film-grid-poster" onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }>
-                                {<img src={'https://image.tmdb.org/t/p/w300/'+film.poster_path} alt={film.title} />}
+                                {(film.poster_path)?
+                                    <img src={'https://image.tmdb.org/t/p/w300/'+film.poster_path} alt={film.title} />
+                                    :<img src={noimage} alt={film.title} />
+                                }
                             </div>
                             <div className="film-grid-description">
                                 <p>{formatDescription(film.overview)}</p>        
@@ -81,7 +89,7 @@ class DataGrid extends Component {
                     </div>:<></>
                 )}   
             </div>      
-            :<span>loaded...</span>
+            :<Spinner />
             
         )
 
