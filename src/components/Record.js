@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {getMovieDetailUrl, getTvShowDetailUrl,
-  getFormatedDate, getFormatYear, getCastUrl, getSimilarMovie, getSimilarTV} from '../functions'
+  getFormatedDate, getFormatYear, getCastUrl, getSimilarMovie, getSimilarTV, getVideoUrl} from '../functions'
 import  { MOVIE_REC,  TVSHOW_REC } from '../actions'
 import SimilarList from './SimilarList'
 import CastList from './CastList'
@@ -18,11 +18,14 @@ class Record extends Component {
     this.state = {
       current: null,
       data: null,
+      video: '',
       loaded: false,
       cast: null,
       castLoaded: false,
       similar: null,
       similarLoaded: false,
+      videoDataLoaded: false,
+      
     }			
     this._isMounted = false
 
@@ -35,12 +38,15 @@ class Record extends Component {
   }
 
   dataLoaded = () =>  {
-    return this.state.loaded  &&   this.state.similarLoaded && this.state.castLoaded
+    return this.state.loaded  
+          && this.state.similarLoaded 
+          && this.state.castLoaded
+         // && this.state.videoDataLoaded
   }
 
 
 
-  loadData = url =>
+  loadData = url => 
     this._isMounted &&
       fetch(url)
         .then(resp => resp.json()) // Transform the data into json
@@ -54,7 +60,21 @@ class Record extends Component {
       getMovieDetailUrl(this.props.recordId) : getTvShowDetailUrl(this.props.recordId))
     this.loadCast()
     this.loadSimilar()
+    this.loadVideoUrl()
   }
+
+  loadVideoUrl = () => {
+
+    https://www.youtube.com/embed/"
+    fetch(getVideoUrl(this.props.recordId))
+      .then(resp => resp.json())
+      .then(data => {
+        
+        this.setState({video: `https://www.youtube.com/embed/${data.results[0].key}`, videoDataLoaded:true})
+      
+    })
+  }
+
 
   loadCast(){
 
@@ -92,6 +112,7 @@ class Record extends Component {
       this.loadData((this.props.action === MOVIE_REC)? 
                       getMovieDetailUrl(this.props.recordId) : 
                       getTvShowDetailUrl(this.props.recordId))
+      this.loadVideoUrl()                
       this.loadCast()
       this.loadSimilar()
      } 
@@ -99,13 +120,14 @@ class Record extends Component {
 
    componentWillUnmount(){
      this._isMounted = false
-    this.setState({current:null, loaded: false, data: null})
+    this.setState({current:null, loaded: false, data: null, videoDataLoaded: false, video:''})
   }
 
   handleBackClicked = e => this.props.backToList(this.props.action)
   similarClicked = value => this.props.getSimilarRecord(value)    
 
   render(){
+  //  console.log('Record: ', this.state.data)
     const film = this.state.data
     return(
       <React.Fragment>
@@ -185,6 +207,8 @@ class Record extends Component {
         }
 
         </div>
+        
+
        
           {
             (this.state.similarLoaded)? 
@@ -194,7 +218,15 @@ class Record extends Component {
             
             :<Spinner />
           }
+        
+        {(this.state.video)?
+        <div className="poster">
+          <iframe  width="640" height="360" src={this.state.video} frameborder="0" allowfullscreen></iframe>          
+        </div> :<></>}
+        
        
+        
+        
       </React.Fragment>
     )
   }

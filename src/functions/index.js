@@ -3,13 +3,13 @@ import {API_KEY,DEF_LANG} from '../constants'
 
 
 export const getMUrl = (page=1,par) =>  {
-    return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&year=${par.year}&with_genres=${par.genre}&sort_by=${par.sort}&language=${DEF_LANG}&include_adult=false&page=${page}`;
+    return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&year=${par.year}&with_genres=${par.genre}&sort_by=${par.sort}&language=${DEF_LANG}&include_adult=false&video=true&page=${page}`;
 }
 
 
 
 export const getTUrl = ( page = '1',par) => {
-    return `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&first_air_date.gte=${par.year}&with_genres=${par.genre}&language=${DEF_LANG}&sort_by=${par.sort}&include_adult=false&include_video=true&page=${page}`;
+    return `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&first_air_date.gte=${par.year}&with_genres=${par.genre}&language=${DEF_LANG}&sort_by=${par.sort}&include_adult=false&video=true&include_video=true&page=${page}`;
 }
 
 
@@ -31,6 +31,12 @@ export const getTVShowReviewsUrl = id =>  {
 
 export const formatDescription = (str, max = 300) => {
     return (str.length > max) ?  str.substr(0,max) + '...' : str
+}
+
+export const getVideoUrl = (id, lang = DEF_LANG) => {
+
+    return `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=${lang}`
+
 }
 
 export const getGenresUrl = () => {

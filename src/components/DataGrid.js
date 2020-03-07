@@ -39,7 +39,7 @@ class DataGrid extends Component {
             .then(data => {
                 this.setState({loaded: true, data: data, url: this.props.url})
                    this.props.pages(this.state.data.total_pages)
-                   console.log('data',data.results[2])
+                   
                })
             .catch(error => console.log('error',error) )   
     
@@ -62,7 +62,7 @@ class DataGrid extends Component {
     
 
     render(){
-        console.log(this.state.data)
+        
         return(
         
             (this.state.loaded) ? 
