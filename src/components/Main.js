@@ -110,7 +110,7 @@ class Main extends Component {
     render(){
   
         return(
-          <div className="container">
+          <div className="container_">
           <header>
           <h1>{this.state.chapter}</h1>
 

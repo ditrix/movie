@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {formatDescription} from '../functions' 
+import axios from 'axios'
+
 
 class DataGrid extends Component {
     constructor(props){
@@ -33,6 +35,17 @@ class DataGrid extends Component {
                    console.log('data',data.results[2])
                })
             .catch(error => console.log('error',error) )   
+    
+
+    // axios(this.props.url)
+    //     .then(response => {
+    //         console.log('axios.response.results ',response.data.results)
+    //         console.log('axios.response.total_pages ',response.data.total_pages)
+    //         this.setState({loaded: true, data: response.data.results, url: this.props.url})
+    //         this.props.pages(response.data.total_pages)
+    //      })
+    //      .catch(error=>console.lof('get grid error: ',error)) 
+
     }
     
     componentDidMount = () => this.loadData(this.props.url)
@@ -47,37 +60,27 @@ class DataGrid extends Component {
         
             (this.state.loaded) ? 
             <div className="film-list">
-                { this.state.data.results.map( film =>
-                         (film)?
-                        <div key={film.id} className="film-grid">
-                            <div className="film-grid-wrapper">
-                                    <div className="film-grid-title">
-                                        
-
-                                         {film.title} 
-                                        <button type='button' className="link-button"  onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }><i className="material-icons">description</i></button>
-                                    </div>
-                                    
-                                    <div className="film-grid-poster">
-                                        {<img src={'https://image.tmdb.org/t/p/w300/'+film.poster_path} alt={film.title} />}
-                                    </div>
-                                    
-                                       
-                                    <div className="film-grid-description">
-                                        <p>
-                                            {film.film_desc}
-                                        </p>        
-                                    </div>
-                                    
-                                    
-                                    <div className="film-grid-more"> 
-                                        <button type='button' className="link-button"  onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }><i className="material-icons">description</i></button>
-                                    </div>
+             { 
+                this.state.data.results.map( (film,index) =>
+                    (film)?
+                    <div key={index} className="film-grid">
+                        <div className="film-grid-wrapper">
+                            <div className="film-grid-title">
+                            {film.title} 
                             </div>
-                        </div>:<></>
-                    )    
-                 }   
-                 </div>      
+                            <div className="film-grid-poster" onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }>
+                                {<img src={'https://image.tmdb.org/t/p/w300/'+film.poster_path} alt={film.title} />}
+                            </div>
+                            <div className="film-grid-description">
+                                <p>{formatDescription(film.overview)}</p>        
+                            </div>
+                            <div className="film-grid-more"> 
+                                <button type='button' className="link-button"  onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }><i className="material-icons">description</i></button>
+                            </div>
+                        </div>
+                    </div>:<></>
+                )}   
+            </div>      
             :<span>loaded...</span>
             
         )

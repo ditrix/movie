@@ -216,7 +216,12 @@ main {
 
 
 .film-grid-poster {
-  grid-column-start: 1; grid-column-end: 2;   padding: 10px;
+  grid-column-start: 1; grid-column-end: 2;   padding: 5px;
+  border: 1px gray solid;
+}
+
+.film-grid-poster img {
+  border: 1px gray solid;
 }
 
 .film-grid-description {
@@ -239,9 +244,7 @@ main {
   
 }
 
-.film-grid-poster {
-  grid-column-start: 1; grid-column-end: 2;   padding: 5px;
-}
+
 
 .film-grid-description {
   grid-column-start: 1; grid-column-end: 2;
