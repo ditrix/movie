@@ -6,6 +6,9 @@ import DataGrid from './DataGrid'
 import Record from './Record'
 import Pager from './Pager'
 import Search from './Search'
+import Lang from './Lang'
+import {_I18N} from '../lib/i18n'
+import {MSG} from '../lib/messages'
 
 import { MOVIE_LIST, MOVIE_REC, TVSHOW_LIST, TVSHOW_REC } from '../actions'
 
@@ -29,7 +32,9 @@ class Main extends Component {
               genre: '', 
               sort: 'popularity.desc'
             },
-            chapter: 'фильмы',
+            chapter: _I18N(MSG.MOVIES,'en'),
+            lang: 'en',
+            langPar: 'en-US',
         }
         this.getFilter = this.getFilter.bind(this)
         this.getDetailId = this.getDetailId.bind(this)
@@ -47,12 +52,19 @@ class Main extends Component {
   
   }
 
+
+  setLang(value){
+    this.setState({lang: value})
+    const chapter = (this.state.action === MOVIE_LIST)?_I18N(MSG.MOVIES,value):_I18N(MSG.TVSHOWS,value) 
+    this.setState({chapter:chapter})
+    const langPar = (value === 'en')?'en-US':'ru-RU'
+  }
+
   getCurrentPage = value =>
      (this.state.action === MOVIE_LIST)? 
         this.setState({page: value,  url : getMUrl(value,this.state.filter)})
         :this.setState({page: value,  url : getTUrl(value,this.state.filter)})   
  
-
   searchData = value =>
       (value)?
       (this.state.action === MOVIE_LIST)?
@@ -73,11 +85,11 @@ class Main extends Component {
  
 
    handlerClickedMovies = () => 
-      this.setState({chapter: 'фильмы', action: MOVIE_LIST, query: '', filter: {year: '', genre: '', sort: ''}, url: getMUrl(this.state.page,this.state.filter)})
+      this.setState({chapter: _I18N(MSG.MOVIES,this.state.lang), action: MOVIE_LIST, query: '', filter: {year: '', genre: '', sort: ''}, url: getMUrl(this.state.page,this.state.filter)})
    
 
    handlerClickedTVShows = () => 
-     this.setState({chapter: 'сериалы', action: TVSHOW_LIST, query: '', filter: {year: '', genre: '', sort: ''}, url: getTUrl(this.state.page,this.state.filter)})
+     this.setState({chapter: _I18N(MSG.TVSHOWS,this.state.lang), action: TVSHOW_LIST, query: '', filter: {year: '', genre: '', sort: ''}, url: getTUrl(this.state.page,this.state.filter)})
    
 
     getDetailId = value => {
@@ -113,19 +125,20 @@ class Main extends Component {
           <div className="container_">
           <header>
           <h1>{this.state.chapter}</h1>
-
+          <Lang setLang={this.setLang.bind(this)} />
 
           </header>
           <nav>
                 <ul>
                     <li><button className={(this.state.action === MOVIE_LIST)? "nav-button-active":"nav-button"
-                  } onClick={this.handlerClickedMovies}>фильмы</button></li>
+                  } onClick={this.handlerClickedMovies}>{_I18N(MSG.MOVIES,this.state.lang)}</button></li>
                     <li><button className={(this.state.action === TVSHOW_LIST)? "nav-button-active":"nav-button"
-                  } onClick={this.handlerClickedTVShows}>сериалы</button></li>                    
-                    <li><Search query={this.state.query} searchData={this.searchData} /></li>
+                  } onClick={this.handlerClickedTVShows}>{_I18N(MSG.TVSHOWS,this.state.lang)}</button></li>                    
+                    <li><Search query={this.state.query} searchData={this.searchData} lang={this.state.lang} /></li>
                 </ul>
                 
            </nav>
+           
           <main>
 
 
@@ -135,7 +148,7 @@ class Main extends Component {
               ((this.state.action === MOVIE_LIST)|(this.state.action === TVSHOW_LIST))?
               <React.Fragment>
                   
-                  <Filter getFilter={this.getFilter} />  
+                  <Filter getFilter={this.getFilter} lang={this.state.lang} />  
                   
                   
                   <DataGrid url={this.state.url} getDetail={this.getDetailId} pages={this.getTotalPages} />

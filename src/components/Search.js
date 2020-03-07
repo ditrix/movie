@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faBookOpen } from '@fortawesome/free-solid-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import {_I18N} from '../lib/i18n'
+import {MSG} from '../lib/messages'
+
 
 class Search extends Component {
     constructor(props){
@@ -40,7 +43,7 @@ class Search extends Component {
                             <input type="text" 
                                 onClick={this.handleClear.bind(this)} 
                                 value={this.state.city} 
-                                placeholder="Search..." 
+                                placeholder={_I18N(MSG.SEARCH,this.props.lang)} 
                                 onChange={this.setQuery.bind(this)}  />
                         </td>
                         <td>
