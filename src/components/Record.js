@@ -236,7 +236,7 @@ class Record extends Component {
         
         {(this.state.video)?
         <div className="poster">
-          <iframe  width="640" height="360" src={this.state.video} frameBorder="0" allowFullScreen></iframe>          
+          <iframe title="this.state.current"  width="640" height="360" src={this.state.video} frameBorder="0" allowFullScreen></iframe>          
         </div> :<></>}
         
        

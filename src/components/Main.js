@@ -169,7 +169,7 @@ class Main extends Component {
           
           </main>    
           <footer>
-            <a href="https://www.themoviedb.org/" target="_blank">DBMovie</a>&nbsp;  
+            <a href="https://www.themoviedb.org/"  target="_blank">DBMovie</a>&nbsp;  
             
             
             dmvoloshin@gmail.com &copy; 2019 </footer>
