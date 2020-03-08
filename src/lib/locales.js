@@ -103,8 +103,24 @@ export const locales = {
         'en':'all genres',
         'ru':'все жанры',
     },
+    'PRODUCTION':{
+        'en':'production:',
+        'ru':'производство:',
+    },  
+    'RATING':{
+        'en':'rating:',
+        'ru':'рейтинг:',
+    },  
+    'DIRECTOR':{
+        'en':'producer:',
+        'ru':'режиссер:',
+    },  
+    'CAST':{
+        'en':'cast:',
+        'ru':'в ролях:',
+    },                  
     '':{
         'en':'',
         'ru':'',
-    },        
+    },    
 }

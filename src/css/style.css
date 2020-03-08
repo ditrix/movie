@@ -1,5 +1,5 @@
-* {
-  color: gray;
+html {
+  color: white;
 }
 
 header {
@@ -12,7 +12,9 @@ header {
   /*visibility: hidden;  */
 }
 
-
+body {
+  color: gray;
+}
 
 
 .clearfix:after {
@@ -199,6 +201,7 @@ main {
   padding: 5px;
 
 }
+
 
 .film-grid-title .link-button {
   text-decoration: none;

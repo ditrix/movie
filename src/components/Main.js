@@ -114,9 +114,7 @@ class Main extends Component {
     getTotalPages = value => this.setState({total:value})
 
     getSimilarRecord(value){
-      // const currentId = value;
-       //this.setState({currentId: value})
-       //console.log('geSimilar', this.state)
+ 
      (this.state.action === MOVIE_REC)? 
             this.setState({action: MOVIE_REC, currentId: value})
             :this.setState({action: TVSHOW_REC, currentId: value})       
@@ -155,7 +153,7 @@ class Main extends Component {
                   <Filter getFilter={this.getFilter} lang={this.state.lang} />  
                   
                   
-                  <DataGrid url={this.state.url} getDetail={this.getDetailId} pages={this.getTotalPages} />
+                  <DataGrid url={this.state.url} locale={this.state.locale} getDetail={this.getDetailId} pages={this.getTotalPages} />
                   <Pager total={this.state.total} current={this.getCurrentPage} />
               </React.Fragment> 
 
@@ -163,7 +161,10 @@ class Main extends Component {
                 backToList={this.backToList} 
                 getSimilarRecord={this.getSimilarRecord}  
                 recordId={this.state.currentId} 
-                action={this.state.action} /> 
+                action={this.state.action} 
+                lang={this.state.lang}
+                locale={this.state.locale}
+                /> 
             }  
           
           </main>    

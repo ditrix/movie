@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import Person from './Person'
 
+import { _I18N } from '../lib/i18n';
+import {MSG} from '../lib/messages'
 
 
 class CastList extends Component {
@@ -35,7 +37,8 @@ class CastList extends Component {
 				 				
 					 			(crew.job === 'Director' && key < 2)&&
 						 			 <li key={key}>
-						 			 	режиссер:&nbsp;<Person person={crew} department='crew' />
+						 			 	{_I18N(MSG.DIRECTOR,this.props.lang)}&nbsp;
+										  	<Person person={crew} department='crew' />
 						 			 </li>
 						 		
 					 		)	
@@ -43,13 +46,11 @@ class CastList extends Component {
 					 	</ul>
 					 	}
 					</div>
-					
-					
 						
 					{
 						(cast)&&
 						<div className="cast-list-wrapper">
-						<span>в ролях:&nbsp;</span>
+						<span>{_I18N(MSG.CAST,this.props.lang)}&nbsp;</span>
 						<ul>
 					 	{
 					 		cast.map((cast,key) =>

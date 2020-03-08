@@ -13,12 +13,12 @@ export const getTUrl = ( page = '1',par,locale= DEF_LANG) => {
 }
 
 
-export const getMovieDetailUrl = record  => {  
-    return `https://api.themoviedb.org/3/movie/${record}?api_key=${API_KEY}&language=${DEF_LANG}`
+export const getMovieDetailUrl = (record,locale = DEF_LANG)  => {  
+    return `https://api.themoviedb.org/3/movie/${record}?api_key=${API_KEY}&language=${locale}`
 }
 
-export const getTvShowDetailUrl = record  => { 
-    return `https://api.themoviedb.org/3/tv/${record}?api_key=${API_KEY}&language=${DEF_LANG}`
+export const getTvShowDetailUrl = (record, locale = DEF_LANG)  => { 
+    return `https://api.themoviedb.org/3/tv/${record}?api_key=${API_KEY}&language=${locale}`
 }
 
 export const getMovieReviewsUrl = id => { 
@@ -93,8 +93,8 @@ export const getPagerData = (current = 1, total = 1) => {
     return items;
 }
 
-export const getSearchUrl = (query, action, page=1 ) => {
-    return `https://api.themoviedb.org/3/search/${action}?api_key=${API_KEY}&language=${DEF_LANG}&page=${page}&include_adult=false&query='${query}'`
+export const getSearchUrl = (query, action, page=1, locale=DEF_LANG ) => {
+    return `https://api.themoviedb.org/3/search/${action}?api_key=${API_KEY}&language=${locale}&page=${page}&include_adult=false&query='${query}'`
 }
 
 
@@ -110,19 +110,19 @@ export const isCyrillic = str => {
 }
 
 
-export const getCastUrl = (action, movie) => {
-  const url = `https://api.themoviedb.org/3/${action}/${movie}/credits?api_key=${API_KEY}&language=${DEF_LANG}`
+export const getCastUrl = (action, movie,locale = DEF_LANG) => {
+  const url = `https://api.themoviedb.org/3/${action}/${movie}/credits?api_key=${API_KEY}&language=${locale}`
   return url
 }
 
 
-export const getSimilarMovie = movie => {
-    const url = `https://api.themoviedb.org/3/movie/${movie}/similar?api_key=${API_KEY}&language=${DEF_LANG}&page=1`
+export const getSimilarMovie = (movie,locale = DEF_LANG) => {
+    const url = `https://api.themoviedb.org/3/movie/${movie}/similar?api_key=${API_KEY}&language=${locale}&page=1`
     return url
 }
 
-export const getSimilarTV = tv => {
-    const url = `https://api.themoviedb.org/3/tv/${tv}/similar?api_key=${API_KEY}&language=${DEF_LANG}&page=1`
+export const getSimilarTV = (tv,locale = DEF_LANG) => {
+    const url = `https://api.themoviedb.org/3/tv/${tv}/similar?api_key=${API_KEY}&language=${locale}&page=1`
     return url
 }
 

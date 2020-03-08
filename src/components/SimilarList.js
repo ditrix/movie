@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { MAX_SIMILAR  } from '../constants'
 import Similar from './Similar'
 import {MOVIE_REC} from '../actions'
+import {_I18N} from '../lib/i18n'
+import {MSG} from '../lib/messages'
 
 class SimilarList extends Component {
   constructor(props){
@@ -38,7 +40,7 @@ class SimilarList extends Component {
           {
               (similar)&&
               <div className="similar-list-content">
-              <h3>РЕКОМЕНДУЕМЫЕ К ПРОСМОТРУ</h3>
+              <h3>{_I18N(MSG.RECOMENDATIONS,this.props.lang)}</h3>
               <ul className="similar-list">
                 {
                   similar.map((similar,index) => 

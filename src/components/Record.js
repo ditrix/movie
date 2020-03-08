@@ -9,6 +9,8 @@ import {Spinner} from './Spinner'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { _I18N } from '../lib/i18n';
+import {MSG} from '../lib/messages'
 
 
 
@@ -25,7 +27,8 @@ class Record extends Component {
       similar: null,
       similarLoaded: false,
       videoDataLoaded: false,
-      
+      locale: '',
+      action: this.props.action
     }			
     this._isMounted = false
 
@@ -46,42 +49,54 @@ class Record extends Component {
 
 
 
-  loadData = url => 
+  loadData = url => {
+    // console.log(url)
     this._isMounted &&
       fetch(url)
         .then(resp => resp.json()) // Transform the data into json
         .then(data => this.setState({loaded: true, data: data, current: this.props.recordId}))
         .catch(err => console.log('load detail error'))   
-        
+  }      
 
-  componentDidMount = () => {
-    this._isMounted = true
-    this.loadData((this.props.action === MOVIE_REC)? 
-      getMovieDetailUrl(this.props.recordId) : getTvShowDetailUrl(this.props.recordId))
-    this.loadCast()
-    this.loadSimilar()
-    this.loadVideoUrl()
+  componentWillReceiveProps(nextProps){   
+    if(this.state.locale !== nextProps.locale){
+      this.setState({locale:nextProps.locale})
+      this.loadData((nextProps.action === MOVIE_REC)? 
+      getMovieDetailUrl(nextProps.recordId,nextProps.locale) 
+      :getTvShowDetailUrl(nextProps.recordId,nextProps.locale))
+      this.loadCast(nextProps.locale)
+      this.loadSimilar(nextProps.locale)
+      this.loadVideoUrl(nextProps.locale)    
+      
+    }
   }
 
-  loadVideoUrl = () => {
+  componentDidMount = () => {
+   // console.log(this.props.locale)
+    this.setState({locale:this.props.locale})
+    this._isMounted = true
+    this.loadData((this.props.action === MOVIE_REC)? 
+      getMovieDetailUrl(this.props.recordId,this.props.locale) 
+      :getTvShowDetailUrl(this.props.recordId,this.props.locale))
+    this.loadCast(this.props.locale)
+    this.loadSimilar(this.props.locale)
+    this.loadVideoUrl(this.props.locale)
+  }
 
-    https://www.youtube.com/embed/"
-    fetch(getVideoUrl(this.props.recordId))
+  loadVideoUrl = (locale) => {
+    fetch(getVideoUrl(this.props.recordId,locale))
       .then(resp => resp.json())
       .then(data => {
-        
         this.setState({video: `https://www.youtube.com/embed/${data.results[0].key}`, videoDataLoaded:true})
-      
     })
   }
 
 
-  loadCast(){
+  loadCast(locale){
 
       const url = (this.props.action === MOVIE_REC)?  
-                    getCastUrl('movie',this.props.recordId):
-                    getCastUrl('tv',this.props.recordId)
-      
+                    getCastUrl('movie',this.props.recordId,locale):
+                    getCastUrl('tv',this.props.recordId,locale)
       this._isMounted &&
       fetch(url)
         .then(resp => resp.json()) // Transform the data into json
@@ -90,10 +105,10 @@ class Record extends Component {
 
   }
 
-  loadSimilar(){
+  loadSimilar(locale){
       const url = (this.props.action === MOVIE_REC)?  
-        getSimilarMovie(this.props.recordId):
-        getSimilarTV(this.props.recordId)
+        getSimilarMovie(this.props.recordId,locale):
+        getSimilarTV(this.props.recordId,locale)
       this._isMounted &&
 
       fetch(url)  
@@ -110,11 +125,11 @@ class Record extends Component {
     if(this.state.current !== this.props.recordId){
       this.setState({current:this.props.recordId})
       this.loadData((this.props.action === MOVIE_REC)? 
-                      getMovieDetailUrl(this.props.recordId) : 
-                      getTvShowDetailUrl(this.props.recordId))
-      this.loadVideoUrl()                
-      this.loadCast()
-      this.loadSimilar()
+                      getMovieDetailUrl(this.props.recordId,this.props.locale) : 
+                      getTvShowDetailUrl(this.props.recordId,this.props.locale))
+      this.loadVideoUrl(this.props.locale)                
+      this.loadCast(this.props.locale)
+      this.loadSimilar(this.props.locale)
      } 
   }
 
@@ -156,7 +171,7 @@ class Record extends Component {
               <img src={'https://image.tmdb.org/t/p/w300/'+film.poster_path} alt={film.title} />
             </div>  
             <div className="film-rec-info">
-              <div className="film-rec-popularity">рейтинг: <span>{film.vote_average*10}%</span>
+              <div className="film-rec-popularity">{_I18N(MSG.RATING,this.props.lang)} <span>{film.vote_average*10}%</span>
               </div>  
 
               {(this.props.action === TVSHOW_REC)?
@@ -178,7 +193,7 @@ class Record extends Component {
               {
               (this.props.action === MOVIE_REC)&&(
               <div className="film-rec-countries">
-                {(film.production_countries)&&<span>производство:</span>}
+                {(film.production_countries)&&<span>{_I18N(MSG.PRODUCTION,this.props.lang)}</span>}
                 <ul>
                 {(film.production_countries)? film.production_countries.map((country,i)=>
                   <li key={i}>{country.name}</li>):<span></span>
@@ -192,9 +207,9 @@ class Record extends Component {
                {(this.state.castLoaded)? 
                 <span>
 
-                  <CastList person={this.state.cast} />
+                  <CastList person={this.state.cast} lang={this.props.lang} />
                 </span>:
-                <span>loaded...</span>
+                <span>loading...</span>
                }
               </div>
             </div>
@@ -213,7 +228,7 @@ class Record extends Component {
           {
             (this.state.similarLoaded)? 
                 <div className="similar-films-wrap">
-                <SimilarList action={this.props.action} similar={this.state.similar}  similarClicked={this.similarClicked}/>
+                <SimilarList action={this.props.action} lang={this.props.lang} similar={this.state.similar}  similarClicked={this.similarClicked}/>
                 </div>
             
             :<Spinner />
@@ -221,7 +236,7 @@ class Record extends Component {
         
         {(this.state.video)?
         <div className="poster">
-          <iframe  width="640" height="360" src={this.state.video} frameborder="0" allowfullscreen></iframe>          
+          <iframe  width="640" height="360" src={this.state.video} frameBorder="0" allowFullScreen></iframe>          
         </div> :<></>}
         
        

@@ -59,7 +59,15 @@ class DataGrid extends Component {
 
     componentWillReceiveProps(nextProps){   
         if(this.state.url !== nextProps.url){
-            console.log(nextProps)
+           
+            fetch(nextProps.url)
+            .then(resp => resp.json()) // Transform the data into json
+            .then(data => {
+                this.setState({loaded: true, data: data, url: nextProps.url})
+                nextProps.pages(this.state.data.total_pages)
+                   
+               })
+            .catch(error => console.log('error',error) )   
         }
         
        
@@ -82,6 +90,9 @@ class DataGrid extends Component {
                     <div key={index} className="film-grid">
                         <div className="film-grid-wrapper">
                             <div className="film-grid-title">
+                            <button type='button' className="link-button"  onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }>
+                                    <FontAwesomeIcon icon={faBookOpen} />
+                            </button>
                             {film.title} 
                             </div>
                             <div className="film-grid-poster" onClick={(e) => { e.preventDefault(); this.refClick(film.id);} }>
