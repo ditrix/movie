@@ -1,3 +1,10 @@
+* {
+  color: gray;
+}
+
+header {
+  background-color: #007cb2;
+}
 .debug {border: 1px blue solid;}
 
 
@@ -130,8 +137,6 @@ text-decoration: none;
 
 header {
   text-align: left;
-  /*background-color: #650700;*/
-  background-color: #0084ff;
   padding: 15px 30px;
   text-transform: uppercase;
   color: lightgray;
@@ -226,6 +231,11 @@ main {
 
 .film-grid-poster img {
   border: 1px inherit solid;
+  width: 250px;
+}
+
+.film-grid-poster:hover{
+  cursor: pointer;
 }
 
 .film-grid-description {
@@ -236,7 +246,6 @@ main {
 .film-grid-description p {margin: 10px;}
 
 
-.film-grid-poster img { width: 250px; }
 
 @media only screen and (min-width: 320px) and (max-width: 480px) {
   .film-grid-wrapper {       

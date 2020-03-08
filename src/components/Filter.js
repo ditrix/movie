@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {getGenresUrl} from '../functions'
+
+import {_I18N} from '../lib/i18n'
+import {MSG} from '../lib/messages'
+
 class Filter extends Component {
     constructor(props){
         super(props)
@@ -11,7 +15,8 @@ class Filter extends Component {
                 year: '',
                 genre: '',
                 sort: 'popularity.desc'
-            }    
+            },
+            lang: this.props.lang
         }
         this.handleYearChange = this.handleYearChange.bind(this)
  
@@ -46,6 +51,7 @@ class Filter extends Component {
         const setRes = (res) => {
             this.setState({genres: res.genres})
         }
+        this.setState({lang:this.props.lang})
         fetch(getGenresUrl())
         .then(resp => resp.json())
         .then(res => setRes(res))
@@ -60,6 +66,15 @@ class Filter extends Component {
         
     }
 
+
+    componentWillReceiveProps(nextProps){
+        
+        fetch(getGenresUrl(_I18N(MSG.LOCALE,nextProps.lang)))
+        .then(resp => resp.json())
+        .then(res => this.setState({genres: res.genres}))
+        .catch(err => console.log('error')) 
+    }
+
     setFilter(){
         this.props.getFilter(this.state.options)   
     }
@@ -71,23 +86,27 @@ class Filter extends Component {
             <div className="input-form-item">
             
             <select id='get-sort-by' onChange={this.handleSortOptionChange.bind(this)} className="filter-item">
-                    <option value=''>сортировка...</option>
-                    <option value='popularity.desc'>популярность по убыванию</option>
-                    <option value='popularity.asc'>популярность по возрастанию</option>
-                    <option value='vote_count.desc'>рейтинг по убыванию</option>
-                    <option value='vote_count.asc'>рейтинг по возрастанию</option>
-                    <option value='release_date.desc'>дата выхода по убыванию</option>
-                    <option value='release_date.asc'>дата выхода по возрастанию</option>
-                    <option value='original_title.asc'>название А..Я</option>
-                    <option value='original_title.desc'>название Я..А</option>
+                    <option value=''>{_I18N(MSG.SORT_BY,this.props.lang)}</option>
+                    <option value='popularity.desc'>{_I18N(MSG.POPULARITY_DESC,this.props.lang)}</option>
+                    <option value='popularity.asc'>{_I18N(MSG.POPULARITY_ASC,this.props.lang)}</option>
+                    <option value='vote_count.desc'>{_I18N(MSG.VOTE_COUNT_DESC,this.props.lang)}</option>
+                    <option value='vote_count.asc'>{_I18N(MSG.VOTE_COUNT_ASC,this.props.lang)}</option>
+                    <option value='release_date.desc'>{_I18N(MSG.RELEASE_DATE_DESC,this.props.lang)}</option>
+                    <option value='release_date.asc'>{_I18N(MSG.RELEASE_DATE_ASC,this.props.lang)}</option>
+                    <option value='original_title.asc'>{_I18N(MSG.ORIGRNAL_TITLE_ASC,this.props.lang)}</option>
+                    <option value='original_title.desc'>{_I18N(MSG.ORIGRNAL_TITLE_ASC,this.props.lang)}</option>
                     <option></option>
             </select>
             </div>
 
             <div className="input-form-item">
-            
+                {/* <div>
+            { this.state.genres.map((genre, key) => 
+                        <div key={key} value={genre.id} >{genre.name}</div>
+                )}
+                </div> */}
             <select  id='get-genre' onChange={this.handleGenreOptionChange.bind(this)}> 
-                <option value="">все жанры</option>
+                <option value="">{_I18N(MSG.ALL_GENRES,this.props.lang)}</option>
                 { this.state.genres.map((genre, key) => 
                         <option key={key} value={genre.id} >{genre.name}</option>
                 )}

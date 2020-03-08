@@ -34,7 +34,7 @@ class Main extends Component {
             },
             chapter: _I18N(MSG.MOVIES,'en'),
             lang: 'en',
-            langPar: 'en-US',
+            locale: 'en-US',
         }
         this.getFilter = this.getFilter.bind(this)
         this.getDetailId = this.getDetailId.bind(this)
@@ -57,20 +57,24 @@ class Main extends Component {
     this.setState({lang: value})
     const chapter = (this.state.action === MOVIE_LIST)?_I18N(MSG.MOVIES,value):_I18N(MSG.TVSHOWS,value) 
     this.setState({chapter:chapter})
-    const langPar = (value === 'en')?'en-US':'ru-RU'
+    const locale =  _I18N(MSG.LOCALE,value)
+    this.setState({locale:locale})
+    this.getCurrentPage(this.state.page,locale)
   }
 
-  getCurrentPage = value =>
+  getCurrentPage = (value,locale) => {
+   
      (this.state.action === MOVIE_LIST)? 
-        this.setState({page: value,  url : getMUrl(value,this.state.filter)})
-        :this.setState({page: value,  url : getTUrl(value,this.state.filter)})   
+        this.setState({page: value,  url : getMUrl(value,this.state.filter,locale)})
+        :this.setState({page: value,  url : getTUrl(value,this.state.filter,locale)})   
+  }
  
   searchData = value =>
       (value)?
       (this.state.action === MOVIE_LIST)?
-          this.setState({query: value, url: getSearchUrl(value,'movie')})
-          :this.setState({query: value, url: getSearchUrl(value,'tv')})   
-      : this.getCurrentPage(1)
+          this.setState({query: value, url: getSearchUrl(value,'movie',this.state.locale)})
+          :this.setState({query: value, url: getSearchUrl(value,'tv',this.state.locale)})   
+      : this.getCurrentPage(1,this.state.locale)
 
  
   componentWillMount = () => this.setState({url: getMUrl(this.state.page,this.state.filter)})
@@ -79,8 +83,8 @@ class Main extends Component {
 
   getFilter = value =>
       (this.state.action ===MOVIE_LIST)?
-        this.setState({page: 1, filter: value, url : getMUrl(1,value)})
-       : this.setState({page: 1,  filter: value, url : getTUrl(1,value)})   
+        this.setState({page: 1, filter: value, url : getMUrl(1,value,this.state.locale)})
+       : this.setState({page: 1,  filter: value, url : getTUrl(1,value,this.state.locale)})   
   
  
 

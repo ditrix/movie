@@ -2,14 +2,14 @@ import {API_KEY,DEF_LANG} from '../constants'
 
 
 
-export const getMUrl = (page=1,par) =>  {
-    return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&year=${par.year}&with_genres=${par.genre}&sort_by=${par.sort}&language=${DEF_LANG}&include_adult=false&video=true&page=${page}`;
+export const getMUrl = (page=1,par,locale= DEF_LANG) =>  {
+    return `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&year=${par.year}&with_genres=${par.genre}&sort_by=${par.sort}&language=${locale}&include_adult=false&video=true&page=${page}`;
 }
 
 
 
-export const getTUrl = ( page = '1',par) => {
-    return `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&first_air_date.gte=${par.year}&with_genres=${par.genre}&language=${DEF_LANG}&sort_by=${par.sort}&include_adult=false&video=true&include_video=true&page=${page}`;
+export const getTUrl = ( page = '1',par,locale= DEF_LANG) => {
+    return `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&first_air_date.gte=${par.year}&with_genres=${par.genre}&language=${locale}&sort_by=${par.sort}&include_adult=false&video=true&include_video=true&page=${page}`;
 }
 
 
@@ -39,8 +39,8 @@ export const getVideoUrl = (id, lang = DEF_LANG) => {
 
 }
 
-export const getGenresUrl = () => {
-    return `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=${DEF_LANG}`;
+export const getGenresUrl = (lang = DEF_LANG) => {
+    return `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=${lang}`;
 }
 
 

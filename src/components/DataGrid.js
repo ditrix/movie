@@ -56,6 +56,15 @@ class DataGrid extends Component {
     }
     
     componentDidMount = () => this.loadData(this.props.url)
+
+    componentWillReceiveProps(nextProps){   
+        if(this.state.url !== nextProps.url){
+            console.log(nextProps)
+        }
+        
+       
+    }
+
     componentWillUnmount = () => this.setState({data: null, loaded: false, url: null})
     handleMoreInfoClicked = e => this.props.getDetail(e.target.value)
     refClick = value =>  this.props.getDetail(value)
